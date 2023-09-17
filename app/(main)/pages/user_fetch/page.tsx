@@ -21,6 +21,7 @@ const UserFetch = () => {
         setLoading(selectedFetchUsers.loading);
         setError(selectedFetchUsers.error);
         setUsers(selectedFetchUsers.users);
+        
     }, [selectedFetchUsers]);
 
     return (
