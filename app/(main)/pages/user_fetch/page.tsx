@@ -56,8 +56,8 @@ const UserFetch = () => {
             }
         });
 
-        console.log('arac kodu: '+selectorAracKodlari.kodlar.map((item) => {console.log(item.aciklama)}));
-        console.log('makam kodu: '+selectorMakamKodlari.kodlar.map((item) => {console.log(item.aciklama)}));
+        console.log('arac kodu: ' + selectorAracKodlari.kodlar.map((item) => { console.log(item.aciklama) }));
+        console.log('makam kodu: ' + selectorMakamKodlari.kodlar.map((item) => { console.log(item.aciklama) }));
 
     }
 
@@ -69,31 +69,31 @@ const UserFetch = () => {
         { name: 'Paris', code: 4 }
     ];
 
-    const getValue = (key:number) => {
+    const getValue = (key: number) => {
         switch (key) {
             case 0:
-                return {name: selectorAracKodlari.kod.aciklama, code: selectorAracKodlari.kod.kod};
-                case 1:
-                    return {name: selectorMakamKodlari.kod.aciklama, code: selectorMakamKodlari.kod.kod};
+                return { name: selectorAracKodlari.kod.aciklama, code: selectorAracKodlari.kod.kod };
+            case 1:
+                return { name: selectorMakamKodlari.kod.aciklama, code: selectorMakamKodlari.kod.kod };
         }
         selectorAracKodlari.kodlar.map((item) => {
             console.log(item.aciklama)
         });
     }
 
-    const getValues = (key:number) => {
+    const getValues = (key: number) => {
         dropdownValues = [];
         switch (key) {
             case 0:
                 selectorAracKodlari.kodlar.map((item) => {
-                    dropdownValues.push({name: item.aciklama, code: item.kod})
+                    dropdownValues.push({ name: item.aciklama, code: item.kod })
                 });
                 break;
-                case 1:
-                    selectorMakamKodlari.kodlar.map((item) => {
-                        dropdownValues.push({name: item.aciklama, code: item.kod})
-                    });
-                    break;
+            case 1:
+                selectorMakamKodlari.kodlar.map((item) => {
+                    dropdownValues.push({ name: item.aciklama, code: item.kod })
+                });
+                break;
         }
         return dropdownValues;
     }
@@ -107,7 +107,18 @@ const UserFetch = () => {
                     {user.id} | {user.name} | {user.email}
                 </li>
             ))}
-            <Dropdown value={getValue(1)} onChange={(e) => console.log(e.value)} options={getValues(1)} optionLabel="name" placeholder="Select" />
+            {
+                selectorParametreler.kodlar.map((item) => (
+                    (item.aciklama=='Seçiniz') ?
+                    <Dropdown 
+                        value={getValue(item.ustKod)} 
+                        onChange={(e) => console.log(e.value)} 
+                        options={getValues(item.ustKod)} 
+                        optionLabel="name" placeholder="Select" />
+                    : null
+                ))
+            }
+
             <button className="btn" onClick={handleFetchUser}>Fetch</button>
         </div>
     );
