@@ -1,0 +1,54 @@
+{
+	"data": [
+		{
+			"ustKod": 0,
+			"kod": 0,
+			"aciklama": "Seçiniz"
+		},
+		{
+			"ustKod": 0,
+			"kod": 1,
+			"aciklama": "TTAŞ"
+		},
+        {
+			"ustKod": 0,
+			"kod": 2,
+			"aciklama": "GSM"
+		},
+        {
+			"ustKod": 0,
+			"kod": 3,
+			"aciklama": "Uydu"
+		},
+        {
+			"ustKod": 1,
+			"kod": 10,
+			"aciklama": "Seçiniz"
+		},
+        {
+			"ustKod": 1,
+			"kod": 11,
+			"aciklama": "MEBS Bşk."
+		},
+        {
+			"ustKod": 1,
+			"kod": 12,
+			"aciklama": "J.Gn.K."
+		},
+        {
+			"ustKod": 1,
+			"kod": 13,
+			"aciklama": "Tyn.D.Bşk."
+		},
+        {
+			"ustKod": 1,
+			"kod": 14,
+			"aciklama": "Eğt.K."
+		},
+        {
+			"ustKod": 1,
+			"kod": 15,
+			"aciklama": "İl J.K."
+		}
+	]
+}
