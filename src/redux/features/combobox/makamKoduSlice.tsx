@@ -15,14 +15,18 @@ export const makamKoduSlice = createSlice({
     name: "makamKodu",
     initialState,
     reducers: {
-        setKod: (state, action: PayloadAction<Kod>) => {
+        clearRankCodes:(state) => {
+            state.kodlar = [];
+            state.kod = { ustKod: 0, kod: 0, aciklama: '' };
+        },
+        setMakamKodu: (state, action: PayloadAction<Kod>) => {
             state.kod = action.payload;
         },
-        setKodlar: (state, action: PayloadAction<Kod>) => {
+        setMakamKodlari: (state, action: PayloadAction<Kod>) => {
             state.kodlar.push(action.payload);
         },
     },
 });
-export const { setKod } = makamKoduSlice.actions;
+export const { setMakamKodu, setMakamKodlari, clearRankCodes } = makamKoduSlice.actions;
 export const makamKoduSelector = (state: RootState) => state.makamKoduReducer;
 export default makamKoduSlice.reducer;

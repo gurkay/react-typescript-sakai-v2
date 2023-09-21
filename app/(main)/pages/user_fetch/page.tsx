@@ -5,10 +5,12 @@ import { useAppDispatch, useAppSelector } from "../../../../src/redux/app/hooks"
 import { User } from "../../../../src/models/user";
 import { getParametreler, parametreSelector } from "../../../../src/redux/features/combobox/parametreSlice";
 import { Dropdown } from "primereact/dropdown";
+import { aracKoduSelector, clearToolCodes, setAracKodlari } from "../../../../src/redux/features/combobox/aracKoduSlice";
+import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/combobox/makamKoduSlice";
 
 interface InputValue {
     name: string;
-    code: string;
+    code: number;
 }
 
 const UserFetch = () => {
@@ -18,29 +20,83 @@ const UserFetch = () => {
     const [dropdownValue, setDropdownValue] = useState(null);
 
     const selectedFetchUsers = useAppSelector(userFetchSelector);
+
     const selectorParametreler = useAppSelector(parametreSelector);
+    const selectorMakamKodlari = useAppSelector(makamKoduSelector);
+    const selectorAracKodlari = useAppSelector(aracKoduSelector);
+
     const dispatch = useAppDispatch();
 
     function handleFetchUser() {
         dispatch(fetchUsers());
-        
-        console.log(selectorParametreler.kodlar);
     }
 
     useEffect(() => {
         setLoading(selectedFetchUsers.loading);
         setError(selectedFetchUsers.error);
         setUsers(selectedFetchUsers.users);
-        dispatch(getParametreler());
     }, [selectedFetchUsers]);
 
-    const dropdownValues: InputValue[] = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
+    useEffect(() => {
+        fillCodes();
+    }, []);
+
+    const fillCodes = () => {
+        dispatch(getParametreler());
+        dispatch(clearToolCodes());
+        dispatch(clearRankCodes());
+        selectorParametreler.kodlar.map((item) => {
+            switch (item.ustKod) {
+                case 0:
+                    dispatch(setAracKodlari(item));
+                    break;
+                case 1:
+                    dispatch(setMakamKodlari(item));
+                    break;
+            }
+        });
+
+        console.log('arac kodu: '+selectorAracKodlari.kodlar.map((item) => {console.log(item.aciklama)}));
+        console.log('makam kodu: '+selectorMakamKodlari.kodlar.map((item) => {console.log(item.aciklama)}));
+
+    }
+
+    let dropdownValues: InputValue[] = [
+        { name: 'New York', code: 0 },
+        { name: 'Rome', code: 1 },
+        { name: 'London', code: 2 },
+        { name: 'Istanbul', code: 3 },
+        { name: 'Paris', code: 4 }
     ];
+
+    const getValue = (key:number) => {
+        switch (key) {
+            case 0:
+                return {name: selectorAracKodlari.kod.aciklama, code: selectorAracKodlari.kod.kod};
+                case 1:
+                    return {name: selectorMakamKodlari.kod.aciklama, code: selectorMakamKodlari.kod.kod};
+        }
+        selectorAracKodlari.kodlar.map((item) => {
+            console.log(item.aciklama)
+        });
+    }
+
+    const getValues = (key:number) => {
+        dropdownValues = [];
+        switch (key) {
+            case 0:
+                selectorAracKodlari.kodlar.map((item) => {
+                    dropdownValues.push({name: item.aciklama, code: item.kod})
+                });
+                break;
+                case 1:
+                    selectorMakamKodlari.kodlar.map((item) => {
+                        dropdownValues.push({name: item.aciklama, code: item.kod})
+                    });
+                    break;
+        }
+        return dropdownValues;
+    }
 
     return (
         <div>
@@ -51,7 +107,7 @@ const UserFetch = () => {
                     {user.id} | {user.name} | {user.email}
                 </li>
             ))}
-             <Dropdown value={dropdownValue} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Select" />
+            <Dropdown value={getValue(1)} onChange={(e) => console.log(e.value)} options={getValues(1)} optionLabel="name" placeholder="Select" />
             <button className="btn" onClick={handleFetchUser}>Fetch</button>
         </div>
     );

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Kod } from "./IKod";
 import { AboneGDSService } from "../../../../app/(main)/service/AboneGDSService";
+import axios from "axios";
 
 interface KodState {
     loading: boolean;
@@ -20,9 +21,8 @@ const initialState: KodState = {
 export const getParametreler = createAsyncThunk(
     "parametreler",
     () => {
-        const res = fetch('/demo/data/parametreler.json').then(data => data.json());
-        return res;
-        
+        const res = axios.get('/demo/data/parametreler.json').then((res) => res.data.data);
+        return Promise.resolve(res);
     }
   )
 
