@@ -9,15 +9,15 @@ import { aracKoduSelector, clearToolCodes, setAracKodlari } from "../../../../sr
 import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/combobox/makamKoduSlice";
 
 interface InputValue {
-    name: string;
-    code: number;
+    ustKod: number;
+    kod: number;
+    aciklama: string;
 }
 
 const UserFetch = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | undefined>(undefined);
     const [users, setUsers] = useState<Array<User>>([]);
-    const [dropdownValue, setDropdownValue] = useState(null);
 
     const selectedFetchUsers = useAppSelector(userFetchSelector);
 
@@ -56,29 +56,17 @@ const UserFetch = () => {
             }
         });
 
-        console.log('arac kodu: ' + selectorAracKodlari.kodlar.map((item) => { console.log(item.aciklama) }));
-        console.log('makam kodu: ' + selectorMakamKodlari.kodlar.map((item) => { console.log(item.aciklama) }));
-
     }
 
-    let dropdownValues: InputValue[] = [
-        { name: 'New York', code: 0 },
-        { name: 'Rome', code: 1 },
-        { name: 'London', code: 2 },
-        { name: 'Istanbul', code: 3 },
-        { name: 'Paris', code: 4 }
-    ];
+    var dropdownValues: InputValue[] = [];
 
     const getValue = (key: number) => {
         switch (key) {
             case 0:
-                return { name: selectorAracKodlari.kod.aciklama, code: selectorAracKodlari.kod.kod };
+                return { ustKod: selectorAracKodlari.kod.ustKod,  kod: selectorAracKodlari.kod.kod, aciklama: selectorAracKodlari.kod.aciklama };
             case 1:
-                return { name: selectorMakamKodlari.kod.aciklama, code: selectorMakamKodlari.kod.kod };
+                return { ustKod: selectorMakamKodlari.kod.ustKod,  kod: selectorMakamKodlari.kod.kod, aciklama: selectorMakamKodlari.kod.aciklama };
         }
-        selectorAracKodlari.kodlar.map((item) => {
-            console.log(item.aciklama)
-        });
     }
 
     const getValues = (key: number) => {
@@ -86,12 +74,12 @@ const UserFetch = () => {
         switch (key) {
             case 0:
                 selectorAracKodlari.kodlar.map((item) => {
-                    dropdownValues.push({ name: item.aciklama, code: item.kod })
+                    dropdownValues.push({ ustKod:item.ustKod, kod: item.kod, aciklama: item.aciklama })
                 });
                 break;
             case 1:
                 selectorMakamKodlari.kodlar.map((item) => {
-                    dropdownValues.push({ name: item.aciklama, code: item.kod })
+                    dropdownValues.push({ ustKod:item.ustKod, kod: item.kod, aciklama: item.aciklama })
                 });
                 break;
         }
@@ -109,12 +97,12 @@ const UserFetch = () => {
             ))}
             {
                 selectorParametreler.kodlar.map((item) => (
-                    (item.aciklama=='Seçiniz') ?
+                    (item.aciklama == 'Seçiniz') ?
                     <Dropdown 
                         value={getValue(item.ustKod)} 
                         onChange={(e) => console.log(e.value)} 
                         options={getValues(item.ustKod)} 
-                        optionLabel="name" placeholder="Select" />
+                        optionLabel="aciklama" placeholder="Select" />
                     : null
                 ))
             }
