@@ -7,11 +7,17 @@ import { getParametreler, parametreSelector } from "../../../../src/redux/featur
 import { Dropdown } from "primereact/dropdown";
 import { aracKoduSelector, clearToolCodes, setAracKodlari } from "../../../../src/redux/features/combobox/aracKoduSlice";
 import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/combobox/makamKoduSlice";
+import { MultiSelect } from "primereact/multiselect";
 
 interface InputValue {
     ustKod: number;
     kod: number;
     aciklama: string;
+}
+
+interface InputCombobox {
+    name: string;
+    code: string;
 }
 
 const UserFetch = () => {
@@ -63,9 +69,9 @@ const UserFetch = () => {
     const getValue = (key: number) => {
         switch (key) {
             case 0:
-                return { ustKod: selectorAracKodlari.kod.ustKod,  kod: selectorAracKodlari.kod.kod, aciklama: selectorAracKodlari.kod.aciklama };
+                return { ustKod: selectorAracKodlari.kod.ustKod, kod: selectorAracKodlari.kod.kod, aciklama: selectorAracKodlari.kod.aciklama };
             case 1:
-                return { ustKod: selectorMakamKodlari.kod.ustKod,  kod: selectorMakamKodlari.kod.kod, aciklama: selectorMakamKodlari.kod.aciklama };
+                return { ustKod: selectorMakamKodlari.kod.ustKod, kod: selectorMakamKodlari.kod.kod, aciklama: selectorMakamKodlari.kod.aciklama };
         }
     }
 
@@ -74,17 +80,37 @@ const UserFetch = () => {
         switch (key) {
             case 0:
                 selectorAracKodlari.kodlar.map((item) => {
-                    dropdownValues.push({ ustKod:item.ustKod, kod: item.kod, aciklama: item.aciklama })
+                    dropdownValues.push({ ustKod: item.ustKod, kod: item.kod, aciklama: item.aciklama })
                 });
                 break;
             case 1:
                 selectorMakamKodlari.kodlar.map((item) => {
-                    dropdownValues.push({ ustKod:item.ustKod, kod: item.kod, aciklama: item.aciklama })
+                    dropdownValues.push({ ustKod: item.ustKod, kod: item.kod, aciklama: item.aciklama })
                 });
                 break;
         }
         return dropdownValues;
     }
+
+    const selectedCountryTemplate = (option:InputValue, props:any) => {
+        if (option) {
+            return (
+                <div className="flex align-items-center">
+                    <div>{option.aciklama}</div>
+                </div>
+            );
+        }
+
+        return <span>{props.placeholder}</span>;
+    };
+
+    const countryOptionTemplate = (option:InputValue) => {
+        return (
+            <div className="flex align-items-center">
+                <div>{option.aciklama}</div>
+            </div>
+        );
+    };
 
     return (
         <div>
@@ -98,12 +124,17 @@ const UserFetch = () => {
             {
                 selectorParametreler.kodlar.map((item) => (
                     (item.aciklama == 'Seçiniz') ?
-                    <Dropdown 
-                        value={getValue(item.ustKod)} 
-                        onChange={(e) => console.log(e.value)} 
-                        options={getValues(item.ustKod)} 
-                        optionLabel="aciklama" placeholder="Select" />
-                    : null
+                        <Dropdown
+                            value={getValue(item.ustKod)}
+                            onChange={(e) => console.log(e.value)}
+                            options={getValues(item.ustKod)}
+                            optionLabel="aciklama" 
+                            placeholder="Select"
+                            valueTemplate={selectedCountryTemplate} 
+                            itemTemplate={countryOptionTemplate} 
+                            filter
+                        />
+                        : null
                 ))
             }
 
