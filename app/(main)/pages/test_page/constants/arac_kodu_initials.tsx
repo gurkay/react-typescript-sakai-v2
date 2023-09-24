@@ -1,4 +1,4 @@
-import { KodState } from "../../../../app/(main)/pages/test_page/interfaces/IKodState";
+import { KodState } from "../interfaces/IKodState";
 
 export const initialState: KodState = {
     kodName: 'aracKodu',

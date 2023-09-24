@@ -35,7 +35,17 @@ const TestPage = () => {
     }
 
     const submitButton = () => {
-        console.log(selectorAracKodlari.kod.kod)
+        let parametre = '/parametre?'
+        const aracKodu = 'aracKodu=';
+        console.log(selectorAracKodlari.seciliKodlar.map((item) => {
+
+            console.log(aracKodu+item.kod)
+            parametre += aracKodu  + item.kod;
+            if(selectorAracKodlari.seciliKodlar.lastIndexOf(item) != -1) {
+                parametre += '&';
+            }
+        }))
+        console.log('parametre: ' + parametre);
         console.log(selectorMakamKodlari.seciliKodlar.map((item) => {
             console.log(item.kod)
         }))
@@ -47,19 +57,15 @@ const TestPage = () => {
             <div className="col-12">
                 <div className="card">
                     <h6>Araç Kodları</h6>
-                    <MyDropdown props={selectorAracKodlari} />
+                    <MyMultiSelect props={selectorAracKodlari} />
                 </div>
             </div>
-
-
             <div className="col-12">
                 <div className="card">
                     <h6>Makam Kodları</h6>
                     <MyMultiSelect props={selectorMakamKodlari} />
                 </div>
             </div>
-
-
             <div className="col-12">
                 <div className="card">
                     <Button label="Submit" onClick={submitButton}></Button>
