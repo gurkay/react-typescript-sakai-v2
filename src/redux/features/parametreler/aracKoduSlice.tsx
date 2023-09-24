@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 import { Parametre } from "../../../../app/(main)/pages/test_page/interfaces/IParametre";
-import { initialState } from "./arac_kodu_initials";
+import { initialState } from "../../../../app/(main)/pages/test_page/constants/arac_kodu_initials";
 
 export const aracKoduSlice = createSlice({
     name: "aracKodu",

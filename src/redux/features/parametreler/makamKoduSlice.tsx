@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { Parametre } from "../../../../app/(main)/pages/test_page/interfaces/IParametre";
-import { initialState } from "./makam_kodu_initials";
+import { initialState } from "../../../../app/(main)/pages/test_page/constants/makam_kodu_initials";
 
 export const makamKoduSlice = createSlice({
     name: "makamKodu",
