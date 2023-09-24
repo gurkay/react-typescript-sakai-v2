@@ -14,6 +14,7 @@ const AppMenu = () => {
         {
             label: 'Home Test',
             items: [
+                { label: 'Test Page', icon: 'pi pi-fw pi-home', to: '/pages/test_page' },
                 { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
                 { label: 'User Add', icon: 'pi pi-fw pi-home', to: '/pages/user_add' },
                 { label: 'User Fetch', icon: 'pi pi-fw pi-home', to: '/pages/user_fetch' },

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { fetchUsers, userFetchSelector } from "../../../../src/redux/features/users/userFetchSlice";
 import { useAppDispatch, useAppSelector } from "../../../../src/redux/app/hooks";
 import { User } from "../../../../src/models/user";
-import { getParametreler, parametreSelector } from "../../../../src/redux/features/combobox/parametreSlice";
 import { Dropdown } from "primereact/dropdown";
-import { aracKoduSelector, clearToolCodes, setAracKodlari } from "../../../../src/redux/features/combobox/aracKoduSlice";
-import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/combobox/makamKoduSlice";
+import { aracKoduSelector, clearToolCodes, setAracKodlari } from "../../../../src/redux/features/parametreler/aracKoduSlice";
 import { MultiSelect } from "primereact/multiselect";
+import { getParametreler, parametreSelector } from "../../../../src/redux/features/parametreler/parametreSlice";
+import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/parametreler/makamKoduSlice";
 
 interface InputValue {
     ustKod: number;

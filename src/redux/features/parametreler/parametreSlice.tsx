@@ -1,22 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { Kod } from "./IKod";
-import { AboneGDSService } from "../../../../app/(main)/service/AboneGDSService";
 import axios from "axios";
-
-interface KodState {
-    loading: boolean;
-    kodlar: Array<Kod>;
-    kod: Kod;
-    error: any;
-}
-
-const initialState: KodState = {
-    loading: false,
-    kodlar: [],
-    kod: { ustKod: 0, kod: 0, aciklama: '' },
-    error: ''
-}
+import { initialState } from "./parametre_initials";
+import { Parametre } from "../../../../app/(main)/pages/test_page/interfaces/IParametre";
 
 export const getParametreler = createAsyncThunk(
     "parametreler",
@@ -30,18 +16,21 @@ export const parametreSlice = createSlice({
     name: "parametre",
     initialState,
     reducers: {
-        setKod: (state, action: PayloadAction<Kod>) => {
+        setParametreKod: (state, action: PayloadAction<Parametre>) => {
             state.kod = action.payload;
         },
-        setKodlar: (state, action: PayloadAction<Kod>) => {
+        setParametreKodlar: (state, action: PayloadAction<Parametre>) => {
             state.kodlar.push(action.payload);
+        },
+        setKod: (state, action: PayloadAction<Parametre>) => {
+          state.kod = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder.addCase(getParametreler.pending, (state) => {
           state.loading = true;
         });
-        builder.addCase(getParametreler.fulfilled, (state, action: PayloadAction<Array<Kod>>) => {
+        builder.addCase(getParametreler.fulfilled, (state, action: PayloadAction<Array<Parametre>>) => {
           state.loading = false;
           state.kodlar = action.payload;
         });
@@ -52,6 +41,6 @@ export const parametreSlice = createSlice({
         });
       },
 });
-export const { setKod, setKodlar } = parametreSlice.actions;
+export const { setParametreKodlar, setParametreKod, setKod } = parametreSlice.actions;
 export const parametreSelector = (state: RootState) => state.parametreReducer;
 export default parametreSlice.reducer;

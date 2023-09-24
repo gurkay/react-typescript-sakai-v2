@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../features/users/userSlice';
 import userFetchReducer from '../features/users/userFetchSlice';
-import aracKoduReducer from '../features/combobox/aracKoduSlice';
-import makamKoduReducer from '../features/combobox/makamKoduSlice';
-import parametreReducer from '../features/combobox/parametreSlice';
+import aracKoduReducer from '../features/parametreler/aracKoduSlice';
+import makamKoduReducer from '../features/parametreler/makamKoduSlice';
+import parametreReducer from '../features/parametreler/parametreSlice';
 
 export const store = configureStore({
   reducer: {
