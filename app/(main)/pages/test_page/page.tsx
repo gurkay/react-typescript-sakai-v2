@@ -6,6 +6,7 @@ import { MyDropdown } from "./components/my_dropdown/MyDropdown";
 import { getParametreler, parametreSelector } from "../../../../src/redux/features/parametreler/parametreSlice";
 import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/parametreler/makamKoduSlice";
 import { MyMultiSelect } from "./components/my_multi_select/MyMultiSelect";
+import { Button } from "primereact/button";
 
 const TestPage = () => {
     const selectorParametreler = useAppSelector(parametreSelector);
@@ -33,17 +34,38 @@ const TestPage = () => {
         });
     }
 
+    const submitButton = () => {
+        console.log(selectorAracKodlari.kod.kod)
+        console.log(selectorMakamKodlari.seciliKodlar.map((item) => {
+            console.log(item.kod)
+        }))
+    }
+
     return (
         <div>
-            <div>
-                <h6>Araç Kodları</h6>
-                <MyDropdown props={selectorAracKodlari} />
+
+            <div className="col-12">
+                <div className="card">
+                    <h6>Araç Kodları</h6>
+                    <MyDropdown props={selectorAracKodlari} />
+                </div>
             </div>
-            
-            <div>
-                <h6>Makam Kodları</h6>
-                <MyMultiSelect props={selectorMakamKodlari} />
+
+
+            <div className="col-12">
+                <div className="card">
+                    <h6>Makam Kodları</h6>
+                    <MyMultiSelect props={selectorMakamKodlari} />
+                </div>
             </div>
+
+
+            <div className="col-12">
+                <div className="card">
+                    <Button label="Submit" onClick={submitButton}></Button>
+                </div>
+            </div>
+
         </div>
     );
 }
