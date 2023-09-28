@@ -39,9 +39,9 @@ const TestPage = () => {
         const aracKodu = 'aracKodu=';
         console.log(selectorAracKodlari.seciliKodlar.map((item) => {
 
-            console.log(aracKodu+item.kod)
-            parametre += aracKodu  + item.kod;
-            if(selectorAracKodlari.seciliKodlar.lastIndexOf(item) != -1) {
+            console.log(aracKodu + item.kod)
+            parametre += aracKodu + item.kod;
+            if (selectorAracKodlari.seciliKodlar.lastIndexOf(item) != -1) {
                 parametre += '&';
             }
         }))
@@ -51,8 +51,40 @@ const TestPage = () => {
         }))
     }
 
+    // Sample JSON data
+    const jsonData = {
+        unit1: {
+            subunit1: {},
+            subunit2: {
+                subsubunit1: {},
+                subsubunit2: {},
+            },
+        },
+        unit2: {},
+    };
+
+    // Recursive component to render units and subunits
+    const TreeNode = ({ data }: any) => {
+        return (
+            <ul>
+                {Object.keys(data).map((key, index) => (
+                    <li key={key}>
+                        {index} {key}
+                        {Object.keys(data[key]).length > 0 && (
+                            <TreeNode data={data[key]} />
+                        )}
+                    </li>
+                ))}
+            </ul>
+        );
+    };
+
     return (
         <div>
+            <div className="col-12">
+                <h1>Tree Structure</h1>
+                <TreeNode data={jsonData} />
+            </div>
 
             <div className="col-12">
                 <div className="card">
