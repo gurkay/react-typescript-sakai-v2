@@ -27,14 +27,15 @@ export const parametreSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getParametreler.pending, (state) => {
+    builder
+    .addCase(getParametreler.pending, (state) => {
       state.loading = true;
-    });
-    builder.addCase(getParametreler.fulfilled, (state, action: PayloadAction<Array<Parametre>>) => {
+    })
+    .addCase(getParametreler.fulfilled, (state, action: PayloadAction<Array<Parametre>>) => {
       state.loading = false;
       state.kodlar = action.payload;
-    });
-    builder.addCase(getParametreler.rejected, (state, action) => {
+    })
+    .addCase(getParametreler.rejected, (state, action) => {
       state.loading = false;
       state.kodlar = [];
       state.error = action.error.message;

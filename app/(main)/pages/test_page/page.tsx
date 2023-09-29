@@ -7,6 +7,7 @@ import { getParametreler, parametreSelector } from "../../../../src/redux/featur
 import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/parametreler/makamKoduSlice";
 import { MyMultiSelect } from "./components/my_multi_select/MyMultiSelect";
 import { Button } from "primereact/button";
+import RocketsIndex from "./components/rockets/RocketsIndex";
 
 const TestPage = () => {
     const selectorParametreler = useAppSelector(parametreSelector);
@@ -81,6 +82,8 @@ const TestPage = () => {
 
     return (
         <div>
+            <RocketsIndex />
+
             <div className="col-12">
                 <h1>Tree Structure</h1>
                 <TreeNode data={jsonData} />

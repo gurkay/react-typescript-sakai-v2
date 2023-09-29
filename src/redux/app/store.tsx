@@ -4,6 +4,7 @@ import userFetchReducer from '../features/users/userFetchSlice';
 import aracKoduReducer from '../features/parametreler/aracKoduSlice';
 import makamKoduReducer from '../features/parametreler/makamKoduSlice';
 import parametreReducer from '../features/parametreler/parametreSlice';
+import rocketsReducer from '../features/rockets/rocketsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     userFetchReducer,
     aracKoduReducer,
     makamKoduReducer,
-    parametreReducer
+    parametreReducer,
+    rocketsReducer
   },
 });
 export type AppDispatch = typeof store.dispatch;
