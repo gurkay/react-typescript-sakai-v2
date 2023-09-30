@@ -7,14 +7,19 @@ import { getParametreler, parametreSelector } from "../../../../src/redux/featur
 import { clearRankCodes, makamKoduSelector, setMakamKodlari } from "../../../../src/redux/features/parametreler/makamKoduSlice";
 import { MyMultiSelect } from "./components/my_multi_select/MyMultiSelect";
 import { Button } from "primereact/button";
-import RocketsIndex from "./components/rockets/RocketsIndex";
+import { RocketsIndex } from "./components/rockets/RocketsIndex";
+import { getRockets, rocketsSelector } from "../../../../src/redux/features/rockets/rocketsSlice";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { setInterval } from "timers/promises";
 
 const TestPage = () => {
+    const dispatch = useAppDispatch();
     const selectorParametreler = useAppSelector(parametreSelector);
     const selectorAracKodlari = useAppSelector(aracKoduSelector);
     const selectorMakamKodlari = useAppSelector(makamKoduSelector);
-    const dispatch = useAppDispatch();
 
+    const selectorRockets = useAppSelector(rocketsSelector);
+    
     useEffect(() => {
         fillCodes();
     }, []);
@@ -33,6 +38,21 @@ const TestPage = () => {
                     break;
             }
         });
+    }
+
+    useEffect(() => {
+        if(selectorRockets.loading === null) {
+            dispatch(getRockets());
+        }
+    }, [selectorRockets.loading, dispatch]);
+
+    let contentToDisplay: any;
+
+    if(selectorRockets.loading === true) {
+    
+        contentToDisplay = <h1>loading...</h1>;
+    } else {
+        contentToDisplay = <h1>oldu</h1>;
     }
 
     const submitButton = () => {
@@ -82,7 +102,10 @@ const TestPage = () => {
 
     return (
         <div>
-            <RocketsIndex />
+            {
+                contentToDisplay
+            }
+           
 
             <div className="col-12">
                 <h1>Tree Structure</h1>

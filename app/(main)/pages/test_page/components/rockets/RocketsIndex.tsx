@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { getRockets, rocketsSelector } from '../../../../../../src/redux/features/rockets/rocketsSlice';
-import { useAppDispatch } from '../../../../../../src/redux/app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../../src/redux/app/hooks';
 
-const RocketsIndex = () => {
+
+export const RocketsIndex = () => {
     const dispatch = useAppDispatch();
-    const selectorRockets = useSelector(rocketsSelector);
+    const selectorRockets = useAppSelector(rocketsSelector);
 
     useEffect(() => {
         if (selectorRockets.status === 'idle') {
@@ -20,7 +20,6 @@ const RocketsIndex = () => {
         contentToDisplay = <h2>Loading...</h2>;
     } else if (selectorRockets.status === 'succeeded') {
         console.log('succeeded')
-        console.log(selectorRockets.rockets)
         contentToDisplay = selectorRockets.rockets.map((item) => (
             <div key={item.id}>
                 <h2>{item.rocket_name}</h2>
@@ -40,5 +39,3 @@ const RocketsIndex = () => {
         </div>
     );
 };
-
-export default RocketsIndex;
