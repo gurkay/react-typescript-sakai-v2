@@ -50,7 +50,7 @@ const TestPage = () => {
 
     if(selectorRockets.loading === true) {
     
-        contentToDisplay = <h1>loading...</h1>;
+        contentToDisplay = <ProgressSpinner />;
     } else {
         contentToDisplay = <h1>oldu</h1>;
     }
