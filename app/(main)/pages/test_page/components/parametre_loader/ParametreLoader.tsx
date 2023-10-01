@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../../src/redux/app/hooks';
 import { MyMultiSelect } from '../my_multi_select/MyMultiSelect';
-import { aracKoduSelector, setAllAracKodlari, setAracKodlari } from '../../../../../../src/redux/features/parametreler/aracKoduSlice';
+import { aracKoduSelector, getAracKodlari, setAllAracKodlari, setAracKodlari } from '../../../../../../src/redux/features/parametreler/aracKoduSlice';
 import { makamKoduSelector, setMakamKodlari } from '../../../../../../src/redux/features/parametreler/makamKoduSlice';
 import { Parametre } from '../../interfaces/IParametre';
 import { getParametreler, parametreSelector } from '../../../../../../src/redux/features/parametreler/parametreSlice';
@@ -14,8 +14,7 @@ interface Props {
 
 export const ParametreLoader = ({reducer} : Props) => {
     const dispatch = useAppDispatch();
-    const selectorParameter = useAppSelector(parametreSelector)
-
+    const selectorAracKodlari = useAppSelector(aracKoduSelector)
     useEffect(() => {
         //fillCodes();
         console.log('selectorParametreler useEffect...')
@@ -23,7 +22,17 @@ export const ParametreLoader = ({reducer} : Props) => {
             console.log('selectorParametreler.loading: ' + reducer.loading)
             dispatch(getParametreler());
         }
-    }, [reducer.loading, selectorParameter]);
+
+
+    }, [dispatch]);
+    
+    useEffect(() => {
+        if(selectorAracKodlari.loading === null) {
+            dispatch(getAracKodlari(reducer.kodlar));
+        }
+
+    }, [dispatch]);
+
 
     let parametreToDisplay: any;
 
@@ -33,17 +42,8 @@ export const ParametreLoader = ({reducer} : Props) => {
 
     } else if (reducer.loading === false) {
         console.log('selectorParametreler.loading: ' + reducer.loading)
-        reducer.kodlar.map((item) => {
-                switch (item.ustKod) {
-                    case 0:
-                        
-                        break;
-                    case 1:
-
-                        
-                        break;
-                } 
-        });    
+        console.log(reducer.kodlar);
+        console.log(selectorAracKodlari)
 
         
     } else if (reducer.loading === undefined) {
