@@ -7,7 +7,7 @@ const ROCKET_URL = 'https://api.spacexdata.com/v3/rockets';
 interface InitialState {
     rockets: Array<any>,
     status: string,
-    loading: boolean | null,
+    loading: boolean | null | undefined,
     error: string | undefined
 }
 
@@ -46,7 +46,7 @@ export const rocketsSlice = createSlice({
     .addCase(getRockets.rejected, (state, action) => {
     state.status = 'failed';
     state.error = action.error.message;
-    state.loading = false;
+    state.loading = undefined;
     });
   },
 });

@@ -3,11 +3,12 @@ import { RootState } from "../../app/store";
 import axios from "axios";
 import { initialState } from "../../../../app/(main)/pages/test_page/constants/parametre_initials";
 import { Parametre } from "../../../../app/(main)/pages/test_page/interfaces/IParametre";
+import { KodState } from "../../../../app/(main)/pages/test_page/interfaces/IKodState";
 
 export const getParametreler = createAsyncThunk(
   "parametreler",
-  () => {
-    const res = axios.get('/demo/data/parametreler.json').then((res) => res.data.data);
+   () => {
+    const res =  axios.get('/demo/data/parametreler.json').then((res) => res.data.data);
     return Promise.resolve(res);
   }
 );
@@ -36,7 +37,7 @@ export const parametreSlice = createSlice({
       state.kodlar = action.payload;
     })
     .addCase(getParametreler.rejected, (state, action) => {
-      state.loading = false;
+      state.loading = undefined;
       state.kodlar = [];
       state.error = action.error.message;
     });

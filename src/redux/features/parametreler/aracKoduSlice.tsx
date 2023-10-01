@@ -17,12 +17,18 @@ export const aracKoduSlice = createSlice({
         },
         setAracKodlari: (state, action: PayloadAction<Parametre>) => {
             state.kodlar.push(action.payload);
+            state.loading = false;
+            console.log('setAracKodlari')
+        },
+        setAllAracKodlari: (state, action: PayloadAction<Array<Parametre>>) => {
+            state.kodlar = (action.payload);
+            console.log('setAllAracKodlari')
         },
         setAracSeciliKodlar: (state, action: PayloadAction<Array<Parametre>>) => {
             state.seciliKodlar = (action.payload);
         },
     },
 });
-export const { setAracKodu, setAracKodlari, clearToolCodes, setAracSeciliKodlar } = aracKoduSlice.actions;
+export const { setAracKodu, setAracKodlari, clearToolCodes, setAracSeciliKodlar, setAllAracKodlari } = aracKoduSlice.actions;
 export const aracKoduSelector = (state: RootState) => state.aracKoduReducer;
 export default aracKoduSlice.reducer;

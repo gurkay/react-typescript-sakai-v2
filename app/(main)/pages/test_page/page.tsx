@@ -10,52 +10,15 @@ import { Button } from "primereact/button";
 import { RocketsIndex } from "./components/rockets/RocketsIndex";
 import { getRockets, rocketsSelector } from "../../../../src/redux/features/rockets/rocketsSlice";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { setInterval } from "timers/promises";
+import { ParametreLoader } from "./components/parametre_loader/ParametreLoader";
 
 const TestPage = () => {
-    const dispatch = useAppDispatch();
     const selectorParametreler = useAppSelector(parametreSelector);
-    const selectorAracKodlari = useAppSelector(aracKoduSelector);
-    const selectorMakamKodlari = useAppSelector(makamKoduSelector);
-
     const selectorRockets = useAppSelector(rocketsSelector);
-    
-    useEffect(() => {
-        fillCodes();
-    }, []);
-
-    const fillCodes = () => {
-        dispatch(getParametreler());
-        dispatch(clearToolCodes());
-        dispatch(clearRankCodes());
-        selectorParametreler.kodlar.map((item) => {
-            switch (item.ustKod) {
-                case 0:
-                    dispatch(setAracKodlari(item));
-                    break;
-                case 1:
-                    dispatch(setMakamKodlari(item));
-                    break;
-            }
-        });
-    }
-
-    useEffect(() => {
-        if(selectorRockets.loading === null) {
-            dispatch(getRockets());
-        }
-    }, [selectorRockets.loading, dispatch]);
-
-    let contentToDisplay: any;
-
-    if(selectorRockets.loading === true) {
-    
-        contentToDisplay = <ProgressSpinner />;
-    } else {
-        contentToDisplay = <h1>oldu</h1>;
-    }
-
+    const selectorAracKodlari = useAppSelector(aracKoduSelector);
     const submitButton = () => {
+        const selectorAracKodlari = useAppSelector(aracKoduSelector);
+        const selectorMakamKodlari = useAppSelector(makamKoduSelector);
         let parametre = '/parametre?'
         const aracKodu = 'aracKodu=';
         console.log(selectorAracKodlari.seciliKodlar.map((item) => {
@@ -102,28 +65,21 @@ const TestPage = () => {
 
     return (
         <div>
-            {
-                contentToDisplay
-            }
-           
+            <ParametreLoader reducer={selectorParametreler} />
+            <div className="col-12">
+                <div className="card">
+                    <h6>Araç Kodları</h6>
+                    <MyMultiSelect reducer={selectorAracKodlari} />
+                </div>
+            </div>
+            <RocketsIndex reducer={selectorRockets} />
 
             <div className="col-12">
                 <h1>Tree Structure</h1>
                 <TreeNode data={jsonData} />
             </div>
 
-            <div className="col-12">
-                <div className="card">
-                    <h6>Araç Kodları</h6>
-                    <MyMultiSelect props={selectorAracKodlari} />
-                </div>
-            </div>
-            <div className="col-12">
-                <div className="card">
-                    <h6>Makam Kodları</h6>
-                    <MyMultiSelect props={selectorMakamKodlari} />
-                </div>
-            </div>
+
             <div className="col-12">
                 <div className="card">
                     <Button label="Submit" onClick={submitButton}></Button>

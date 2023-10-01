@@ -2,34 +2,44 @@ import React, { useEffect } from 'react';
 import { getRockets, rocketsSelector } from '../../../../../../src/redux/features/rockets/rocketsSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../../src/redux/app/hooks';
 
+interface _InitialState {
+    rockets: Array<any>,
+    status: string,
+    loading: boolean | null | undefined,
+    error: string | undefined
+}
 
-export const RocketsIndex = () => {
+interface _Props {
+    reducer : _InitialState
+}
+
+export const RocketsIndex = ({reducer} : _Props) => {
     const dispatch = useAppDispatch();
     const selectorRockets = useAppSelector(rocketsSelector);
 
     useEffect(() => {
-        if (selectorRockets.status === 'idle') {
+        if (reducer.status === 'idle') {
             dispatch(getRockets());
         }
-    }, [selectorRockets.status, dispatch]);
+    }, [reducer.status, dispatch]);
 
     let contentToDisplay: any = '';
 
-    if (selectorRockets.status === 'loading') {
+    if (reducer.status === 'loading') {
         console.log('loading')
         contentToDisplay = <h2>Loading...</h2>;
-    } else if (selectorRockets.status === 'succeeded') {
+    } else if (reducer.status === 'succeeded') {
         console.log('succeeded')
-        contentToDisplay = selectorRockets.rockets.map((item) => (
+        contentToDisplay = reducer.rockets.map((item) => (
             <div key={item.id}>
                 <h2>{item.rocket_name}</h2>
                 <p>{item.description}</p>
                 <hr />
             </div>
         ));
-    } else if (selectorRockets.status === 'failed') {
+    } else if (reducer.status === 'failed') {
         console.log('failed')
-        contentToDisplay = <p>{selectorRockets.error}</p>;
+        contentToDisplay = <p>{reducer.error}</p>;
     }
 
     return (
@@ -37,5 +47,7 @@ export const RocketsIndex = () => {
             <h1>Rockets page</h1>
             {contentToDisplay}
         </div>
+
+        
     );
 };
