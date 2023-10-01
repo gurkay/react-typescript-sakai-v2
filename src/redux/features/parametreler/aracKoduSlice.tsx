@@ -17,7 +17,6 @@ export const aracKoduSlice = createSlice({
         },
         setAracKodlari: (state, action: PayloadAction<Parametre>) => {
             state.kodlar.push(action.payload);
-            state.loading = false;
             console.log('setAracKodlari')
         },
         setAllAracKodlari: (state, action: PayloadAction<Array<Parametre>>) => {

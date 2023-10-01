@@ -1,7 +1,7 @@
 import { KodState } from "../../interfaces/IKodState";
 import { useAppDispatch, useAppSelector } from "../../../../../../src/redux/app/hooks";
 import { UstKodConstats } from "../../enum/ust_kod_constants";
-import { aracKoduSelector, setAracKodlari, setAracSeciliKodlar } from "../../../../../../src/redux/features/parametreler/aracKoduSlice";
+import { aracKoduSelector, clearToolCodes, setAracKodlari, setAracSeciliKodlar } from "../../../../../../src/redux/features/parametreler/aracKoduSlice";
 import { setMakamSeciliKodlar } from "../../../../../../src/redux/features/parametreler/makamKoduSlice";
 import { MultiSelect } from "primereact/multiselect";
 import { Parametre } from "../../interfaces/IParametre";
@@ -16,25 +16,27 @@ export const MyMultiSelect = ({ reducer }: Props) => {
 
     const dispatch = useAppDispatch();
     const selectorParametreler = useAppSelector(parametreSelector);
+    useEffect(() => {
+        dispatch(clearToolCodes());
+        if (reducer.loading === null) {
 
-    if (reducer.loading === null) {
+            selectorParametreler.kodlar.map((item) => {
+                console.log(item)
+                switch (item.ustKod) {
 
-        selectorParametreler.kodlar.map((item) => {
-            console.log(item)
-            switch (reducer.kodName) {
+                    case 0:
+                        dispatch(setAracKodlari(item));
+                        break;
+        
+                    case 1:
+               
+                        break;
+                }
+                
+            });  
 
-                case UstKodConstats.AracKodu:
-                    dispatch(setAracKodlari(item));
-                    break;
-    
-                case UstKodConstats.MakamKodu:
-           
-                    break;
-            }
-            
-        });  
-
-    }
+        }
+    }, []);
 
     const setKod = (e: Array<Parametre>) => {
 
