@@ -7,7 +7,7 @@ import { NodeService } from "../../../../demo/service/NodeService";
 
 const Solid = () => {
     const [files, setFiles] = useState<TreeNode[]>([]);
-    const [selectedFileKeys, setSelectedFileKeys] = useState<string | TreeMultipleSelectionKeys | TreeCheckboxSelectionKeys | null>(null);
+    const [selectedFileKeys, setSelectedFileKeys] = useState<any>(null);
 
     useEffect(() => {
         NodeService.getFiles().then((files) => setFiles(files));
@@ -25,10 +25,11 @@ const Solid = () => {
                     value={files} 
                     selectionMode="checkbox" 
                     selectionKeys={selectedFileKeys} 
-                    onSelectionChange={(e) => setSelectedFileKeys(e.value)}
+                    // onSelectionChange={(e) => setSelectedFileKeys(e.value)}
                     onNodeClick={(e) => {
-                        console.log('evesetSelectedFileKeys: ', selectedFileKeys)
-                        console.log('event: ', e)
+                        console.log('event: ', e.node)
+                        setSelectedFileKeys(e.node);
+                        console.log('evesetSelectedFileKeys: ', selectedFileKeys);
                     }}
                 />
             </div>
